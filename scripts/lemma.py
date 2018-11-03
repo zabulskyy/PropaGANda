@@ -1,16 +1,18 @@
 letters = "абвгґдеєжзиіїйклмнопрстуфхцчшщьюя-\'"
 
-lemma_dict = dict()
+def get_lemma_dict(path="data/lemma_dict.txt"):
+    lemma_dict = dict()
+    with open(path, 'r') as file:
+        lines = file.readlines()
+        for line in lines:
+            l = line.split()
+            lemma_dict[l[0]] = l[1]
+    return lemma_dict
 
-LEMMA_DICT_PATH = "../data/lemma_dict.txt"
+if __name__ == "__main__":
+    lemma_dict = get_lemma_dict()
 
-with open("lemma_dict.txt", 'r') as file:
-    lines = file.readlines()
-    for line in lines:
-        l = line.split()
-        lemma_dict[l[0]] = l[1]
-        
-        
+
 def get_ascii(word, l=letters):
     new = ""
     for w in word:
@@ -35,7 +37,7 @@ def get_lemma_sent(sent, ld=lemma_dict):
 def get_lemma_par(par):
     new = []
     for sent in par.split('.'):
-        sent = get_lemma_sent(sent).strip()
+        sent = get_lemma_sent(sent)
         if sent: 
             new.append(sent)
     return new
