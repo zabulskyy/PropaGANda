@@ -13,6 +13,7 @@ body {
     text-overflow: clip;
     font-size: 22px;
     padding: 0 80px 0 20px;
+    font-family: "Ubuntu", sans-serif;
 }
 
 .header {
@@ -37,6 +38,7 @@ body {
     height: 10000px;
     width: 60px;
     background: #323232;
+    min-width: 60px;
 }
 
 .verdict-positive-header, .verdict-negative-header {
@@ -79,6 +81,7 @@ body {
 }
 
 .analyse-btn {
+    z-index: 100;
     position: absolute;
     top: 300px;
     left: 915px;
@@ -91,4 +94,24 @@ body {
     cursor: pointer;
     font-size: 18px;
     padding: 0;
+}
+
+
+.textarea{
+    width: 750px;
+    height: 850px;
+    text-overflow: clip;
+    font-size: 22px;
+    padding: 0 80px 0 20px;
+    overflow: auto;
+    line-height: 30px;
+}
+
+
+.textarea__text-positive{
+    background: lightgreen;
+}
+
+.textarea__text-negative{
+    background: coral
 }

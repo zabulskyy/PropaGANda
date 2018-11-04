@@ -8,17 +8,40 @@
     <title>PropaGANda</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<script>
 
+    function hide() {
+        document.getElementById("input").style.display = 'none';
+
+
+
+        document.getElementById("text").style.display = 'block';
+        document.getElementById("verdict").style.display = 'block';
+    }
+
+
+</script>
 <body>
     <aside class="left-block"></aside>
     <div class="container">
         <h1 class="header">PropaGANda</h1>
-        <form action="">
-            <button type="submit" class="analyse-btn">ANALYSE</button>
-            <textarea class="textarea" name="" id="" cols="30" spellcheck="false" placeholder="Type your text here" rows="10"></textarea>
+        <p class="textarea" id="text" style="display:none">
+            <span class="textarea__text-positive">Lorem</span> ipsum <span class="textarea__text-positive">dolor</span>
+            <span class="textarea__text-positive">sit</span> amet consectetur
+            adipisicing
+            <span class="textarea__text-positive">elit</span>. Recusandae vel voluptas
+            <span class="textarea__text-negative">voluptatibus</span> sapiente nobis explicabo cumque, perferendis
+            <span class="textarea__text-negative">praesentium omnis </span>veniam ab provident illum, quidem labore
+            vitae mollitia dolore vero eum!
+        </p>
+        <button onclick="hide()" class="analyse-btn">ANALYSE</button>
+
+        <form action="" id="input">
+            <textarea class="textarea" name="" id="" cols="30" spellcheck="false" placeholder="Type your text here"
+                rows="10"></textarea>
         </form>
     </div>
-    <div class="verdict">
+    <div class="verdict" style="display:none" id="verdict">
         <div class="verdict-container">
             <div class="verdict-positive">
                 <h3 class="verdict-positive-header">Positive sentimentality</h3>
@@ -36,4 +59,8 @@
     </div>
 </body>
 
+
 </html>
+
+
+<!-- Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis ipsa quibusdam aliquid nostrum dignissimos qui error, quaerat nisi earum similique commodi consequuntur quisquam consectetur saepe sapiente accusantium voluptatem nobis illum. -->
