@@ -5,6 +5,10 @@ body {
     overflow: hidden;
 }
 
+*:focus {
+    outline: none;
+}
+
 .textarea {
     width: 750px;
     resize: none;
