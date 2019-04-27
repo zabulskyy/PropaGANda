@@ -1,0 +1,13 @@
+opencv-python
+joblib
+torch
+pyyaml
+Cython
+pycocotools
+matplotlib
+pandas
+albumentations
+tqdm
+glog
+tensorboardX
+tensorflow

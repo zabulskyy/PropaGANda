@@ -34,9 +34,9 @@ class BasicModelAdapter(ModelAdapter):
 
     @staticmethod
     def get_input(data):
-        # TODO: inputs and outputs
-        input = torch.cat((data['img1'], data['img2']), 0)
-        return input.cuda(), data['class']
+        inputs, targets = data
+        inputs, targets = inputs.cuda(), targets.cuda()
+        return inputs, targets
 
     @staticmethod
     def get_model_export(net):
