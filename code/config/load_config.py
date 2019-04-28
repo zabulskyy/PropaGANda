@@ -12,12 +12,12 @@ def update_config(d, u):
 
 
 def load_yaml(config_path):
-    with open(config_path, "r")as f:
-        return yaml.load(f)
+    with open(config_path, 'r')as f:
+        return yaml.load(f, Loader=yaml.FullLoader)
 
 
 def get_config(config_path):
-    default_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "default.yaml"))
+    default_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'default.yaml'))
 
     config = load_yaml(config_path)
     default_config = load_yaml(default_path)

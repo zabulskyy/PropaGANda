@@ -3,6 +3,7 @@ import torch.utils.data as data
 from pycocotools.coco import COCO
 import pandas as pd
 import numpy as np
+import torch
 
 from .transforms import get_transform
 
@@ -14,6 +15,10 @@ class MNISTDataset(data.Dataset):
 
     def __len__(self):
         return self.data.shape[0]
+
+    def __getitem__(self, index):
+        return torch.from_numpy(self.data[index, 1:].reshape((1, 28, 28))).float(),\
+               torch.LongTensor([self.data[index, 0]])
 
 
 class COCODetectionDataset(data.Dataset):

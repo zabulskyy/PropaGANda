@@ -1,5 +1,6 @@
 import logging
 from collections import defaultdict
+import os.path as osp
 
 import numpy as np
 from tensorboardX import SummaryWriter
@@ -7,8 +8,9 @@ from tensorboardX import SummaryWriter
 
 class MetricCounter:
     def __init__(self, exp_name):
-        self.writer = SummaryWriter(exp_name)
-        logging.basicConfig(filename='{}.log'.format(exp_name), level=logging.DEBUG)
+        path_to_write = osp.join('experiments', exp_name)
+        self.writer = SummaryWriter(path_to_write)
+        logging.basicConfig(filename='{}.log'.format(path_to_write), level=logging.DEBUG)
         self.metrics = defaultdict(list)
         self.best_metric = 0
         self.window_size = 100

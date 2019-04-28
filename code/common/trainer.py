@@ -2,10 +2,11 @@ import torch
 import torch.optim as optim
 import tqdm
 from glog import logger
+import os.path as osp
 
 from .metric_utils import get_metric_counter, EarlyStopping
 from .adapters import get_model_adapter
-from .losses.loss import get_loss
+from .losses import get_loss
 
 
 class Trainer(object):
@@ -18,6 +19,9 @@ class Trainer(object):
         self.metric_counter = get_metric_counter(config)
         self.steps_per_epoch = config.get("steps_per_epoch", len(self.train_dataset))
         self.validation_steps = config.get('validation_steps', len(self.val_dataset))
+        self.path_to_write = osp.join('experiments', self.config['experiment_desc'])
+        if self.config.get('verbose', False):
+            print(model)
 
     def train(self):
         self._init_params()
@@ -38,10 +42,10 @@ class Trainer(object):
         if self.metric_counter.update_best_model():
             torch.save({
                 'model': self.model_adapter.get_model_export(self.model)
-            }, 'best_{}.h5'.format(self.config['experiment_desc']))
+            }, 'best_{}.h5'.format(self.path_to_write))
         torch.save({
             'model': self.model_adapter.get_model_export(self.model)
-        }, 'last_{}.h5'.format(self.config['experiment_desc']))
+        }, 'last_{}.h5'.format(self.path_to_write))
         logger.info(self.metric_counter.loss_message())
 
     def _run_epoch(self, epoch):

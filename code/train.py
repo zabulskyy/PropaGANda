@@ -4,6 +4,7 @@ import cv2
 from joblib import cpu_count
 from torch.utils.data import DataLoader
 import torch.backends.cudnn as cudnn
+import torch.nn as nn
 
 from config import get_config
 from data import get_dataset
@@ -20,6 +21,9 @@ def _get_model(config):
         model = BasicCNN()
     else:
         raise ValueError("Model [%s] not recognized." % model_config['name'])
+
+    model = model.cuda()
+    model = nn.DataParallel(model)
     return model
 
 
@@ -34,5 +38,5 @@ if __name__ == '__main__':
     datasets = map(get_dataset, datasets)
     train, val = map(get_dataloader, datasets)
 
-    trainer = Trainer(_get_model(config).cuda(), config, train=train, val=val)
+    trainer = Trainer(_get_model(config), config, train=train, val=val)
     trainer.train()

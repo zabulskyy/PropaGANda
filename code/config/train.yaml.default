@@ -1,23 +1,15 @@
 ---
-experiment_desc: ssd-seresnext50
-phase: train
+experiment_desc: basic_model
 
 train:
     dataset: MNIST
-    dataset_path: dataset/train.csv
+    dataset_path: files/train.csv
 val:
     dataset: MNIST
-    dataset_path: dataset/train.csv
+    dataset_path: files/train.csv
 
 model:
-    num_classes: 13
-    img_size: 300
-    name: ssd
-    backbone: se_resnext
-    encoder_depth: 50
-    pretrained: True
-    visual_thr: 0.25
-
+    name: basic
     loss:
         name: cross_entropy_loss
 
