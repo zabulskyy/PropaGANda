@@ -1,11 +1,13 @@
 import torch
 
 from contrib.models import get_model
+from contrib.preprocess import Preprocess
 
 
 class SentimentModel(object):
     def __init__(self, model_config):
         self._init_model(model_config)
+        self.preprocess_model = Preprocess(model_config['preprocess'])
 
     def __call__(self, review):
         with torch.no_grad():
@@ -16,7 +18,7 @@ class SentimentModel(object):
         return self._postprocess(out)
 
     def _preprocess(self, review):
-        return  # TODO: add preprocessing
+        return self.preprocess_model(review)
 
     def _postprocess(self, out):
         return out.argmax(dim=-1).squeeze().tolist()
@@ -28,3 +30,5 @@ class SentimentModel(object):
         self.model = self.model.eval()
         if torch.cuda.is_available():
             self.model = self.model.cuda()
+
+

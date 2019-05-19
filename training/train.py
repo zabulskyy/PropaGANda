@@ -5,7 +5,7 @@ from joblib import cpu_count
 from torch.utils.data import DataLoader
 import torch.backends.cudnn as cudnn
 
-from training.data import get_dataset
+from training.data import get_datasets
 from training.trainer import Trainer
 
 cudnn.benchmark = True
@@ -19,8 +19,7 @@ if __name__ == '__main__':
     get_dataloader = partial(DataLoader, batch_size=batch_size, num_workers=cpu_count(),
                              shuffle=True, drop_last=True, pin_memory=True)
 
-    datasets = map(config.pop, ('train', 'val'))
-    datasets = map(get_dataset, datasets)
+    datasets = get_datasets(config['dataset'])
     train, val = map(get_dataloader, datasets)
 
     trainer = Trainer(config, train=train, val=val)

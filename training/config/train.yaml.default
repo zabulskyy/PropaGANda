@@ -1,12 +1,10 @@
 ---
 experiment_desc: basic_model
 
-train:
-    dataset: MNIST
-    dataset_path: files/train.csv
-val:
-    dataset: MNIST
-    dataset_path: files/train.csv
+dataset:
+    split: 0.8
+    pickle_path: /home/roman/Workspace/sandbox/pytorch/data_70.pickle
+
 
 model:
     name: lstm
@@ -18,6 +16,13 @@ model:
 
     loss:
         name: cross_entropy
+
+    preprocess:
+        uk_vec_path: /home/roman/Workspace/datasets/nlp/wiki.multi.uk.vec
+        lemma_dict_path: /home/roman/tmp/nlp/PropaGANda/data/lemma_dict.txt
+        stopwords_path: /home/roman/tmp/nlp/PropaGANda/data/stop_words_mini.txt
+        nmax: -1
+        max_words: -1
 
 optimizer:
     name: adam
