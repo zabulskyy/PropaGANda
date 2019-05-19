@@ -1,4 +1,5 @@
 import torch
+import torch.nn.functional as F
 
 from contrib.models import get_model
 
@@ -19,7 +20,8 @@ class SentimentModel(object):
         return  # TODO: add preprocessing
 
     def _postprocess(self, out):
-        return out.argmax(dim=-1).squeeze().tolist()
+        probs = F.softmax(out, dim=-1)
+        return probs.squeeze().list()  # out.argmax(dim=-1).squeeze().tolist()
 
     def _init_model(self, config):
         self.model = get_model(config)
