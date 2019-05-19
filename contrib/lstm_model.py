@@ -36,7 +36,9 @@ class LSTMModelAdapter(BaseModelAdapter):
         return reviews, targets
 
     def get_metric(self, outputs, targets):
-        pass
+        logits = outputs.argmax(dim=-1)
+        is_correct = (logits == targets)
+        return is_correct.sum() / is_correct.numel()
 
     def get_model_export(self, model):
         return model.state_dict()
