@@ -1,34 +1,19 @@
 from functools import partial
+import yaml
 
-import cv2
 from joblib import cpu_count
 from torch.utils.data import DataLoader
 import torch.backends.cudnn as cudnn
-import torch.nn as nn
 
-from config import get_config
-from data import get_dataset
-from common.trainer import Trainer
-from models import BasicCNN
+from training.data import get_dataset
+from training.trainer import Trainer
 
 cudnn.benchmark = True
-cv2.setNumThreads(0)
-
-
-def _get_model(config):
-    model_config = config['model']
-    if model_config['name'] == 'basic':
-        model = BasicCNN()
-    else:
-        raise ValueError("Model [%s] not recognized." % model_config['name'])
-
-    model = model.cuda()
-    model = nn.DataParallel(model)
-    return model
 
 
 if __name__ == '__main__':
-    config = get_config("config/train.yaml")
+    with open("config/train.yaml", "r") as f:
+        config = yaml.load(f)
 
     batch_size = config.pop('batch_size')
     get_dataloader = partial(DataLoader, batch_size=batch_size, num_workers=cpu_count(),
@@ -38,5 +23,5 @@ if __name__ == '__main__':
     datasets = map(get_dataset, datasets)
     train, val = map(get_dataloader, datasets)
 
-    trainer = Trainer(_get_model(config), config, train=train, val=val)
+    trainer = Trainer(config, train=train, val=val)
     trainer.train()
