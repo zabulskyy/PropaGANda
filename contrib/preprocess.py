@@ -1,6 +1,7 @@
 import tokenize_uk
 import numpy as np
 import io
+import torch
 
 
 class Preprocess:
@@ -28,7 +29,7 @@ class Preprocess:
         return words
 
     def __call__(self, s):
-        return self.preprocess_sent(s)
+        return torch.FloatTensor(self.preprocess_sent(s)).unsqueeze(0)
 
 
 def load_vec(emb_path, nmax=50000):
