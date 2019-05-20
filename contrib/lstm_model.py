@@ -10,8 +10,9 @@ class LSTMModel(BaseModel):
         self._init_model(embedding_dim, num_features, num_classes)
 
     def forward(self, x):
-        rnn_out, (ht, ct) = self.lstm(x)
-        fc_out = self.fc(rnn_out[:, -1, :])
+        for lstm_layer in self.lstm:
+            x, (ht, ct) = lstm_layer(x)
+        fc_out = self.fc(x[:, -1, :])
         return fc_out
 
     def _init_model(self, embedding_dim, num_features, num_classes):
